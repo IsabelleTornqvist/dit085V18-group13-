@@ -1,12 +1,16 @@
-import static org.junit.Assert.*;
+import Controller.Actuator;
+import Model.Car;
 import org.junit.Before;
-import org.junit.*;
+import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import java.awt.*;
-import static org.mockito.Mockito.*;
 
-public class MockitoTests {
+import java.awt.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.when;
+
+public class MockitoTest {
 
     @Mock
     private Car car;
@@ -22,10 +26,10 @@ public class MockitoTests {
 
     @Test
     public void testScenarioChangeLaneOccupied(){
-        // Car starts to move forward
+        // Model.Car starts to move forward
         ac.move();
         ac.move();
-        // Car tries to turn left
+        // Model.Car tries to turn left
         when(car.leftLaneDetect()).thenReturn(true);
         ac.switchLane();
         // Check that the car did not turn left
@@ -40,10 +44,10 @@ public class MockitoTests {
 
     @Test
     public void testScenarioChangeToLaneVacant(){
-        // Car starts to move forward
+        // Model.Car starts to move forward
         ac.move();
         ac.move();
-        // Car tries to turn left
+        // Model.Car tries to turn left
         when(car.leftLaneDetect()).thenReturn(false);
         ac.switchLane();
         // Check that the car did turn left

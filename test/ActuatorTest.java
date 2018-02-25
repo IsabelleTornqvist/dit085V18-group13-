@@ -1,10 +1,12 @@
-import static org.junit.Assert.*;
+import Controller.Actuator;
+import Model.Car;
 import org.junit.Before;
-import org.junit.*;
+import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import java.awt.*;
-import static org.mockito.Mockito.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.when;
 
 public class ActuatorTest {
 
@@ -20,38 +22,38 @@ public class ActuatorTest {
         ac.car = this.car;
     }
 
-	@Test
-	public void testMoveNormal() {
-		int oldPos = ac.car.whereIs().x;
-		ac.move();
-		assertEquals(oldPos + 5, ac.car.whereIs().x);
-	}
+    @Test
+    public void testMoveNormal() {
+        int oldPos = ac.car.whereIs().x;
+        ac.move();
+        assertEquals(oldPos + 5, ac.car.whereIs().x);
+    }
 
-	@Test
-	public void testMoveEndOfStreet() {
-		ac.car.position.x = 100;
-		ac.move();
-		assertEquals(100, ac.car.whereIs().x);
-	}
+    @Test
+    public void testMoveEndOfStreet() {
+        ac.car.position.x = 100;
+        ac.move();
+        assertEquals(100, ac.car.whereIs().x);
+    }
 
-	@Test
-	public void testMoveCloseEndOfStreet() {
-		ac.car.position.x = 97;
-		ac.move();
-		assertEquals(100, ac.car.whereIs().x);
-	}
+    @Test
+    public void testMoveCloseEndOfStreet() {
+        ac.car.position.x = 97;
+        ac.move();
+        assertEquals(100, ac.car.whereIs().x);
+    }
 
 
-	@Test
-	public void testSwitchLaneNormal() {
-		when(car.leftLaneDetect()).thenReturn(false);
-		ac.switchLane();
-		assertEquals(5, ac.car.whereIs().y);
-		assertEquals(1, ac.car.currentLane);
-		assertEquals(5, ac.car.whereIs().x);
-	}
+    @Test
+    public void testSwitchLaneNormal() {
+        when(car.leftLaneDetect()).thenReturn(false);
+        ac.switchLane();
+        assertEquals(5, ac.car.whereIs().y);
+        assertEquals(1, ac.car.currentLane);
+        assertEquals(5, ac.car.whereIs().x);
+    }
 
-	@Test
+    @Test
     public void testSwitchLaneLeftLaneOccupied(){
         when(car.leftLaneDetect()).thenReturn(true);
         ac.switchLane();
@@ -62,9 +64,9 @@ public class ActuatorTest {
 
     @Test
     public void testSwitchLaneMostLeft(){
-	    ac.car.currentLane = 0;
-	    ac.car.position.y = 10;
-	    ac.switchLane();
+        ac.car.currentLane = 0;
+        ac.car.position.y = 10;
+        ac.switchLane();
         assertEquals(10, ac.car.whereIs().y);
         assertEquals(0, ac.car.currentLane);
         assertEquals(5, ac.car.whereIs().x);
